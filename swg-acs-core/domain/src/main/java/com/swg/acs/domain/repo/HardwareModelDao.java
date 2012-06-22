@@ -10,4 +10,5 @@ import com.swg.acs.domain.HardwareModel;
  */
 public interface HardwareModelDao extends JpaRepository<HardwareModel, Long>{
 
+	HardwareModel findByOui(String oui);
 }
