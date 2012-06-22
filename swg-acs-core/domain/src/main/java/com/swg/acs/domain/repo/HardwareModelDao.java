@@ -1,5 +1,7 @@
 package com.swg.acs.domain.repo;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.swg.acs.domain.HardwareModel;
@@ -10,5 +12,6 @@ import com.swg.acs.domain.HardwareModel;
  */
 public interface HardwareModelDao extends JpaRepository<HardwareModel, Long>{
 
-	HardwareModel findByOui(String oui);
+	public HardwareModel findByOui(String oui);
+	public List<HardwareModel> findByManufacturer(String manufacturer);
 }
