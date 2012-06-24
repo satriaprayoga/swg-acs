@@ -14,4 +14,5 @@ public interface DataModel extends Serializable {
 	public DataModel getRoot() throws DataModelException;
 	public String getName();
 	public Class<?> getType();
+	public Object getValue();
 }
