@@ -6,12 +6,15 @@ package com.swg.acs;
 import java.io.Serializable;
 import java.util.Calendar;
 
+import javax.xml.soap.SOAPMessage;
+
 import com.swg.acs.message.cwmp.ArgumentFactory;
 import com.swg.acs.message.cwmp.CwmpMessageBody;
 
 
 
 /**
+ * Kelas dasar Message yang direquest/diresponse oleh CPE dan ACS
  * @author satriaprayoga
  *
  */
@@ -62,10 +65,29 @@ public abstract class Message implements Serializable{
 		messageBody=new CwmpMessageBody(name);
 	}
 	
+	/**
+	 * Implementasikan method ini untuk konfigurasi SOAP-Header
+	 * @param header
+	 * @param argumentFactory
+	 */
 	protected abstract void configureHeader(MessageHeader header,ArgumentFactory argumentFactory);
+	/**
+	 * Implementasikan method ini untuk konfigurasi SOAP-Envelope
+	 * @param envelope
+	 */
 	protected abstract void configureEnvelope(MessageEnvelope envelope);
+	/**
+	 * Implementasikan method ini untuk konfigurasi SOAP-Body. Ini berhubungan langsung dengan isi pesan
+	 * @param bodyPart
+	 * @param argumentFactory
+	 */
 	protected abstract void configureBody(MessageBody bodyPart,ArgumentFactory argumentFactory);
 	
+	/**
+	 * Implementasikan method ini untuk menyesuaikan SOAP message yang diparsing dari argument method messageBody
+	 * ke dalam properti yang diperlukan kelas turunan dari kelas ini
+	 * @param messageBody
+	 */
 	protected abstract void configureParse(MessageBody messageBody);
 	
 	public void setId(String id) {
@@ -108,6 +130,9 @@ public abstract class Message implements Serializable{
 		return messageEnvelope;
 	}
 	
+	/**
+	 * method untuk menginstantiasi sebuah {@link SOAPMessage} dari kelas ini
+	 */
 	public void config(){
 		ArgumentFactory factory=ArgumentFactory.getInstance();
 		configureEnvelope(messageEnvelope);
@@ -115,6 +140,9 @@ public abstract class Message implements Serializable{
 		configureBody(messageBody, factory);
 	}
 	
+	/**
+	 * method untuk mengkonfigurasi object ini dari sebuah {@link SOAPMessage} (setelah parsing)
+	 */
 	public void configParse(){
 		configureParse(messageBody);
 	}
