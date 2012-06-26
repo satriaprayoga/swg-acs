@@ -15,4 +15,6 @@ public interface DataModel extends Serializable {
 	public String getName();
 	public Class<?> getType();
 	public Object getValue();
+	public boolean isNumberIdentifier();
+	public boolean isAliasIdentifier();
 }
