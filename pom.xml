@@ -6,6 +6,7 @@
   <packaging>pom</packaging>
   <modules>
   	<module>swg-acs-core</module>
+  	<module>swg-acs-application</module>
   </modules>
    <properties>
 		<aspectj.version>1.6.12</aspectj.version>
