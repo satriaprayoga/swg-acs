@@ -16,6 +16,11 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.swg</groupId>
+			<artifactId>message</artifactId>
+			<version>1.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
