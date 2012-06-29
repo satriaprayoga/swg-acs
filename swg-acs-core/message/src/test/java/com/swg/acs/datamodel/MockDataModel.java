@@ -1,62 +1,28 @@
 package com.swg.acs.datamodel;
 
-import junit.framework.Assert;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.junit.Test;
 
+import com.swg.acs.message.datamodel.DataModel;
+
 public class MockDataModel {
 
-	private MockDataModel root;
-	private Object value;
-	private String label;
 	
-	public void setRoot(MockDataModel root) {
-		this.root = root;
-	}
 	
-	public boolean isRoot(){
-		return (root==null);
-	}
-	
-	public MockDataModel getRoot() {
-		return root;
-	}
-	
-	public void setLabel(String label) {
-		this.label = label;
-	}
-	
-	public String getLabel() {
-		return label;
-	}
-	
-	public void setValue(Object value) {
-		this.value = value;
-	}
-	
-	public Object getValue() {
-		return value;
-	}
-	
-	public boolean isNumberIdentifier(){
-		return (Number.class.isAssignableFrom(value.getClass()));
-	}
-	
-	public boolean isAliasIdentifier(){
-		return (String.class.isAssignableFrom(value.getClass()));
-	}
-	
-	public Class<?> getType(){
-		return value.getClass();
-	}
+	static String regex="((\\w*|\\d*)?\\.{1})";
+	static Pattern pattern=Pattern.compile(regex);
 	
 	@Test
-	public void testDataModel(){
-		MockDataModel dataModel=new MockDataModel();
-		dataModel.setValue(2);
-		Assert.assertTrue(dataModel.isNumberIdentifier());
-		Assert.assertFalse(dataModel.isAliasIdentifier());
-		System.out.println(dataModel.getType().toString());
+	public void testBikinDataModel(){
+		String input="InternetServiceGateway.ManagementServer.URL.WANDeviceSetting.";
+		Matcher matcher=pattern.matcher(input);
+		DataModel model=new DataModel();
+		while(matcher.find()){
+			model.append(matcher.group(0));
+		}
+		System.out.println(model.getFullDesc());
 	}
 	
 }
