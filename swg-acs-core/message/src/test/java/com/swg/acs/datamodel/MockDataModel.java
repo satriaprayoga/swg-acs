@@ -1,8 +1,8 @@
 package com.swg.acs.datamodel;
 
-import junit.framework.Assert;
-
 import org.junit.Test;
+
+import com.swg.acs.message.datamodel.DataModel;
 
 public class MockDataModel {
 
@@ -52,11 +52,17 @@ public class MockDataModel {
 	
 	@Test
 	public void testDataModel(){
-		MockDataModel dataModel=new MockDataModel();
-		dataModel.setValue(2);
-		Assert.assertTrue(dataModel.isNumberIdentifier());
-		Assert.assertFalse(dataModel.isAliasIdentifier());
-		System.out.println(dataModel.getType().toString());
+		DataModel dataModel=new DataModel();
+		dataModel.append("Device.");
+		dataModel.append("ManagementServer.");
+		System.out.println(dataModel.getFullDesc());
+	}
+	
+	
+	
+	@Test
+	public void testBikinDataModel(){
+		
 	}
 	
 }
