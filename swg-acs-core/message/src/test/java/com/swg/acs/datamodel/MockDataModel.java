@@ -15,6 +15,15 @@ public class MockDataModel {
 	static Pattern pattern=Pattern.compile(regex);
 	
 	@Test
+	public void testDataModel(){
+		DataModel model=new DataModel();
+		model.append("Device.");
+		model.append("DeviceInfo.");
+		model.append("ManagementServer.");
+		System.out.println(model.getFullDesc());
+	}
+	
+	@Test
 	public void testBikinDataModel(){
 		String input="InternetServiceGateway.ManagementServer.URL.WANDeviceSetting.";
 		Matcher matcher=pattern.matcher(input);
