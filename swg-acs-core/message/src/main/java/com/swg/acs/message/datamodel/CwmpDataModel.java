@@ -3,6 +3,7 @@
  */
 package com.swg.acs.message.datamodel;
 
+
 /**
  * @author satriaprayoga
  *
@@ -10,14 +11,10 @@ package com.swg.acs.message.datamodel;
 public abstract class CwmpDataModel implements DataModel{
 	private static final long serialVersionUID = -181110367139226483L;
 	
-	public static final DataModel DEVICE=new DeviceDataModel();
-	public static final DataModel INT_GATEWAY_DEVICE=new InternetGatewayDeviceDataModel();
-	
 	protected DataModelItem head=null;
 	protected DataModelItem tail=null;
 	
 	private final String rootName;
-	private Object value;
 	
 	public CwmpDataModel() {
 		this(null);
@@ -26,6 +23,8 @@ public abstract class CwmpDataModel implements DataModel{
 	public CwmpDataModel(String rootName) {
 		this.rootName=rootName;
 	}
+	
+	
 	
 	@Override
 	public void append(String identifier) {
@@ -46,12 +45,18 @@ public abstract class CwmpDataModel implements DataModel{
 	
 	@Override
 	public void setValue(String value) {
-		this.value=value;
+		tail.value=value;
 	}
 	
 	@Override
 	public Object getValue() {
-		return value;
+		return tail.value;
+	}
+	
+	@Override
+	public boolean isPartialPath() {
+		String lastValue=(String) tail.value;
+		return lastValue.endsWith(".");
 	}
 	
 	@Override
@@ -70,28 +75,6 @@ public abstract class CwmpDataModel implements DataModel{
 		return builder.toString();
 	}
 	
-	private static class DeviceDataModel extends CwmpDataModel{
-		private static final long serialVersionUID = 2425395936345743279L;
-
-		public DeviceDataModel() {
-			super("Device.");
-			append("Device.");
-		}
-
-		
-		
-	}
 	
-	private static class InternetGatewayDeviceDataModel extends CwmpDataModel{
-		private static final long serialVersionUID = -5401657523825827822L;
-
-		public InternetGatewayDeviceDataModel() {
-			super("InternetGatewayDevice.");
-			append("InternetGatewayDevice.");
-		}
-
-		
-		
-	}
-
+	
 }

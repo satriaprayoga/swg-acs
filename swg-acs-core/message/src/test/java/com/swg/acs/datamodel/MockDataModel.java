@@ -7,32 +7,37 @@ import org.junit.Test;
 
 import com.swg.acs.message.datamodel.CwmpDataModel;
 import com.swg.acs.message.datamodel.DataModel;
+import com.swg.acs.message.datamodel.DataModelUtil;
 
 public class MockDataModel {
+	
+	class MockDeviceDataModel extends CwmpDataModel{
+
+		private static final long serialVersionUID = 1L;
+		
+		public MockDeviceDataModel() {
+			super();
+		}
+		
+		@Override
+		public boolean isPartialPath() {
+			// TODO Auto-generated method stub
+			return false;
+		}
+		
+	}
 
 	static Logger logger=Logger.getLogger(MockDataModel.class);
 	
-	static String regex="((\\w*|\\d*)?\\.{1})";
+	static String regex="(((.*)?\\.{1})|(\\[.*?\\.{1}]))";
 	static Pattern pattern=Pattern.compile(regex);
 	
 	@Test 
 	public void testDeviceDataModel(){
-		DataModel dataModel=CwmpDataModel.DEVICE;
-		logger.info(dataModel.getRootName());
-		logger.info(dataModel.isEmpty());
-		dataModel.append("ManagemenServer.");
-		logger.info(dataModel.getFullDesc());
-		logger.info(dataModel.isEmpty());
-		dataModel.append("URL.");
-		logger.info(dataModel.getFullDesc());
-		
-		DataModel dataModel2=CwmpDataModel.INT_GATEWAY_DEVICE;
-		logger.info(dataModel2.getRootName());
-		logger.info(dataModel2.isEmpty());
-		dataModel2.append("ManagemenServer.");
-		logger.info(dataModel2.getFullDesc());
-		logger.info(dataModel2.isEmpty());
-		dataModel2.append("URL.");
-		logger.info(dataModel2.getFullDesc());
+		String input="InternetGatewayDevice.DeviceInfo.WANSettings";
+		DataModel dataModel=DataModelUtil.parseFromInput(input);
+		System.out.println("full: "+dataModel.getFullDesc());
+		System.out.println("value: "+dataModel.getValue().toString());
+		System.out.println("is partial path: "+dataModel.isPartialPath());
 	}
 }

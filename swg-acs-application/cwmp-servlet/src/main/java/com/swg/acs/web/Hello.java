@@ -1,12 +1,18 @@
 package com.swg.acs.web;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.OutputStream;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.soap.SOAPException;
+import javax.xml.soap.SOAPMessage;
+
+import com.swg.acs.Message;
+import com.swg.acs.message.GetRPCMethodsResponse;
+import com.swg.acs.message.soap.SoapMessageBuilder;
 
 @WebServlet("/")
 public class Hello extends ACSServlet {
@@ -20,33 +26,27 @@ public class Hello extends ACSServlet {
 	@Override
 	protected void process(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		PrintWriter out = resp.getWriter();
-		// Get Authorization header
-		Authenticator authenticator=getCwmpSoapContext().getAuthenticator();
+		OutputStream outputStream=resp.getOutputStream();
+		CwmpSoapContext context=getCwmpSoapContext();
+		Authenticator authenticator=context.getAuthenticator();
 		if(!authenticator.authenticate(req, resp)){
 			 resp.setHeader("WWW-Authenticate", "BASIC realm=\"ACS\"");
 		     resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
 		}else {
-	      // Allowed, so show him the secret stuff
-	      out.println("Top-secret stuff");
-	    }
-		/*
-		CwmpSoapContext cwmpSoapContext=getCwmpSoapContext();
-		System.out.println("Get Request: "+req.getMethod());
-		Message message=new GetRPCMethodsResponse();
-		SoapMessageBuilder builder=cwmpSoapContext.getSoapMessageBuilder();
-		SOAPMessage soapMessage=null;
-		try {
-			soapMessage=builder.build(message);
-			resp.setContentType("text/xml");
-			OutputStream outputStream=resp.getOutputStream();
+	      SoapMessageBuilder builder=context.getSoapMessageBuilder();
+	      resp.setContentType("text/xml");
+	      Message message=new GetRPCMethodsResponse();
+	      try {
+			SOAPMessage soapMessage=builder.build(message);
+			outputStream=resp.getOutputStream();
 			soapMessage.writeTo(outputStream);
-			outputStream.flush();
-			outputStream.close();
 		} catch (SOAPException e) {
 			e.printStackTrace();
 		}
-		 */
+	      outputStream.flush();
+	      outputStream.close();
+	    }
+		
 	}
 	
 

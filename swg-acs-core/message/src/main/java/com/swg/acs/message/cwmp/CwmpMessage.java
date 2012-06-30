@@ -19,6 +19,8 @@ public abstract class CwmpMessage extends Message{
 
 	public CwmpMessage() {
 		super();
+		messageEnvelope=new CwmpMessageEnvelope();
+		messageHeader=new CwmpMessageHeader();
 	}
 
 	public CwmpMessage(String name) {

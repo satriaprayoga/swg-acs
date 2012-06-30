@@ -42,23 +42,12 @@ public class CpeAuthenticator implements Authenticator {
 			}else{
 				return false;
 			}
+		}else{
+			throw new RuntimeException("Unsupported authentication scheme");
 		}
-		return false;
+		
 	}
 
-	@Override
-	public boolean isBasic(HttpServletRequest request,
-			HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isDigest(HttpServletRequest request,
-			HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 	
 	
 	

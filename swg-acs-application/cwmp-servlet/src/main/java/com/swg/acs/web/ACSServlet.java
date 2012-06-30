@@ -26,6 +26,8 @@ public abstract class ACSServlet extends HttpServlet{
 	
 	protected static Logger logger=Logger.getLogger(ACSServlet.class);
 	
+	protected static String LAST_INFORM="lastinform";
+	
 	private CwmpSoapContext cwmpSoapContext;
 
 	@Override

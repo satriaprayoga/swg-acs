@@ -22,4 +22,6 @@ public interface DataModel extends Serializable{
 	Object getValue();
 	
 	void setValue(String value);
+	
+	boolean isPartialPath();
 }

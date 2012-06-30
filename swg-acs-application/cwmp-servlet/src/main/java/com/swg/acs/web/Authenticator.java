@@ -14,7 +14,5 @@ public interface Authenticator {
 
 	public boolean authenticate(HttpServletRequest request,HttpServletResponse response);
 	
-	public boolean isBasic(HttpServletRequest request,HttpServletResponse response);
 	
-	public boolean isDigest(HttpServletRequest request,HttpServletResponse response);
 }
