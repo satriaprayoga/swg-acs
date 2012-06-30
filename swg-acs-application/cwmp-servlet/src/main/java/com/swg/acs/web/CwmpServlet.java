@@ -21,14 +21,16 @@ import com.swg.acs.message.soap.SoapMessageBuilder;
  * @author satriaprayoga
  *
  */
-public abstract class ACSServlet extends HttpServlet{
+public abstract class CwmpServlet extends HttpServlet{
 	private static final long serialVersionUID = 4729089365346761948L;
 	
-	protected static Logger logger=Logger.getLogger(ACSServlet.class);
+	protected static Logger logger=Logger.getLogger(CwmpServlet.class);
 	
 	protected static String LAST_INFORM="lastinform";
 	
 	private CwmpSoapContext cwmpSoapContext;
+	
+	private RequestHandler responseHandler;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -86,6 +88,14 @@ public abstract class ACSServlet extends HttpServlet{
 			return authenticator;
 		}
 		
+	}
+	
+	public void setResponseHandler(RequestHandler responseHandler) {
+		this.responseHandler = responseHandler;
+	}
+	
+	public RequestHandler getResponseHandler() {
+		return responseHandler;
 	}
 
 }

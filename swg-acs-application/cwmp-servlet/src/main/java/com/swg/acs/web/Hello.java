@@ -15,7 +15,7 @@ import com.swg.acs.message.GetRPCMethodsResponse;
 import com.swg.acs.message.soap.SoapMessageBuilder;
 
 @WebServlet("/")
-public class Hello extends ACSServlet {
+public class Hello extends CwmpServlet {
 
 	private static final long serialVersionUID = 1L;
 

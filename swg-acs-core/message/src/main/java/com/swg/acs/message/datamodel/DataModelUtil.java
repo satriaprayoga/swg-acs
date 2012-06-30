@@ -14,7 +14,7 @@ import org.apache.log4j.Logger;
  */
 public abstract class DataModelUtil {
 	
-	static String regex="\\G((([A-Za-z0-9]+)|(\\[[A-Za-z0-9]+]))?\\.*)";//"((\\w*|\\d*)?\\.{1})";
+	static String regex="\\G((([A-Za-z0-9]+)|(\\[[A-Za-z0-9]+]))?\\.*)";
 	static Pattern pattern=Pattern.compile(regex);
 	
 	static Logger logger=Logger.getLogger(DataModelUtil.class);
@@ -28,6 +28,7 @@ public abstract class DataModelUtil {
 		else if(input.startsWith("InternetGatewayDevice.")){
 			model=new InternetGatewayDeviceDataModel();
 		}else{
+			logger.error("Invalid root name");
 			throw new DataModelException("Invalid root Name");
 		}
 		parse(model, input);
@@ -41,7 +42,7 @@ public abstract class DataModelUtil {
 		while(matcher.find()){
 			String parsed=matcher.group().trim();
 			if(!parsed.trim().isEmpty()){
-				logger.info("parse: "+parsed);
+				logger.debug("parse: "+parsed);
 				model.append(parsed);
 			}
 		}
