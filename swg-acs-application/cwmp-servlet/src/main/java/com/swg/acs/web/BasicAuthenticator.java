@@ -15,11 +15,11 @@ import org.apache.commons.codec.binary.Base64;
  * @author satriaprayoga
  *
  */
-public class CpeAuthenticator implements Authenticator {
+public class BasicAuthenticator implements Authenticator {
 	
 	private final static Map<String, String> userMaps=new HashMap<String, String>();
 	
-	public CpeAuthenticator() {
+	public BasicAuthenticator() {
 		userMaps.put("user1", "asdqwe123");
 	}
 

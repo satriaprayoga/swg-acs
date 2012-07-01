@@ -14,5 +14,5 @@ public interface CwmpSoapContext {
 
 	public SoapMessageBuilder getSoapMessageBuilder();
 	public MessageParser getMessageParser();
-	public CpeAuthenticator getAuthenticator();
+	public Authenticator getAuthenticator();
 }

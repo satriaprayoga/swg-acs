@@ -3,6 +3,7 @@ package com.swg.acs.web;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,13 @@ public class Hello extends CwmpServlet {
 	static String PAGE_HEADER = "<html><head><title>helloworld</title><body>";
 
 	static String PAGE_FOOTER = "</body></html>";
+	
+	@Override
+	public void init(ServletConfig config) throws ServletException {
+		logger.debug("initializing Cwmp Servlet");
+		super.init(config);
+		setResponseHandler(new CwmpResponseHandler());
+	}
 
 	@Override
 	protected void process(HttpServletRequest req, HttpServletResponse resp)

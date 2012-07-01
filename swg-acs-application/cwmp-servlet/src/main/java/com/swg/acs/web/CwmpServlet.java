@@ -12,11 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import com.swg.acs.message.soap.CwmpMessageBuilder;
-import com.swg.acs.message.soap.CwmpMessageParser;
-import com.swg.acs.message.soap.MessageParser;
-import com.swg.acs.message.soap.SoapMessageBuilder;
-
 /**
  * @author satriaprayoga
  *
@@ -53,7 +48,7 @@ public abstract class CwmpServlet extends HttpServlet{
 	
 	public CwmpSoapContext getCwmpSoapContext() {
 		if(cwmpSoapContext==null)
-			cwmpSoapContext=new DefaultCwmpSoapContext();
+			cwmpSoapContext=new Default();
 		return cwmpSoapContext;
 	}
 	
@@ -61,34 +56,6 @@ public abstract class CwmpServlet extends HttpServlet{
 		this.cwmpSoapContext = cwmpSoapContext;
 	}
 	
-	private class DefaultCwmpSoapContext implements CwmpSoapContext{
-
-		private SoapMessageBuilder builder;
-		private MessageParser messageParser;
-		private CpeAuthenticator authenticator;
-		
-		@Override
-		public SoapMessageBuilder getSoapMessageBuilder() {
-			if(builder==null)
-				builder=CwmpMessageBuilder.getSoapMessageBuilderInstance();
-			return builder;
-		}
-
-		@Override
-		public MessageParser getMessageParser() {
-			if(messageParser==null)
-				messageParser=CwmpMessageParser.getMessageParserInstance();
-			return messageParser;
-		}
-		
-		@Override
-		public CpeAuthenticator getAuthenticator() {
-			if(authenticator==null)
-				authenticator=new CpeAuthenticator();
-			return authenticator;
-		}
-		
-	}
 	
 	public void setResponseHandler(RequestHandler responseHandler) {
 		this.responseHandler = responseHandler;
