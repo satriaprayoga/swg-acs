@@ -14,7 +14,7 @@ import org.apache.catalina.startup.Tomcat;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.junit.After;
 import org.junit.Before;
@@ -36,7 +36,7 @@ public class TestCwmpServlet {
 		String baseDir=System.getProperty("java.io.tmpdir");
 
 		Context context=tomcat.addContext("/swg-acs", baseDir);
-		tomcat.addServlet("/swg-acs", "acsServlet", new TestSoapServlet());
+		tomcat.addServlet("/swg-acs", "acsServlet", new TestAcsServlet());
 		context.addServletMapping("/", "acsServlet");
 		tomcat.start();
 	}
@@ -50,11 +50,11 @@ public class TestCwmpServlet {
 		message2.writeTo(stream);
 		byte[] data=stream.toByteArray();
 		stream.close();
-		//System.out.println(new String(data));
+		
 		HttpClient client=new DefaultHttpClient();
 		HttpPost httpPost=new HttpPost("http://localhost:8080/swg-acs/");
 		httpPost.addHeader("Content-Type", "text/xml");
-		httpPost.setEntity(new ByteArrayEntity(data));
+		httpPost.setEntity(new StringEntity(new String(data)));
 		HttpResponse httpResponse=client.execute(httpPost);
 		InputStreamReader inputStream=new InputStreamReader(httpResponse.getEntity().getContent());
 		String line="";
@@ -64,6 +64,7 @@ public class TestCwmpServlet {
 			builder2.append(line);
 		}
 		reader.close();
+		
 		System.out.println(builder2.toString());
 		MessageFactory factory=MessageFactory.newInstance();
 		SOAPMessage message3=factory.createMessage(null, new ByteArrayInputStream(builder2.toString().getBytes()));
