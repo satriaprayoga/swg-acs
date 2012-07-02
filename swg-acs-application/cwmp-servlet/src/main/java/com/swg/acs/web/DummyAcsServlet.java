@@ -21,7 +21,7 @@ import com.swg.acs.message.soap.SoapUtil;
  * @author satriaprayoga
  *
  */
-public class TestAcsServlet extends AcsServlet{
+public class DummyAcsServlet extends AcsServlet{
 	private static final long serialVersionUID = 1L;
 
 	@Override

@@ -36,7 +36,7 @@ public class TestCwmpServlet {
 		String baseDir=System.getProperty("java.io.tmpdir");
 
 		Context context=tomcat.addContext("/swg-acs", baseDir);
-		tomcat.addServlet("/swg-acs", "acsServlet", new TestAcsServlet());
+		tomcat.addServlet("/swg-acs", "acsServlet", new DummyAcsServlet());
 		context.addServletMapping("/", "acsServlet");
 		tomcat.start();
 	}
