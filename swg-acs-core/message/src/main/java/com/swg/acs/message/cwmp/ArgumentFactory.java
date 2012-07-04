@@ -30,17 +30,19 @@ public abstract class ArgumentFactory {
 		return argument;
 	}
 	
-	public MessageArgument createMessageArgument(String name,String prefix,String uri){
-		return (MessageArgument) createArgument(name, prefix, uri);
-	}
+	public abstract MessageArgument createMessageArgument(String name,String prefix,String uri);
 	
 	public MessageArgument createMessageArgument(String name){
-		return (MessageArgument) createArgument(name, null, null);
+		return createMessageArgument(name, null, null);
 	}
 	
-	
-	static class CwmpArgumentFactory extends ArgumentFactory{
+	private static class CwmpArgumentFactory extends ArgumentFactory{
 		public CwmpArgumentFactory() {
 		}
+		public MessageArgument createMessageArgument(String name,String prefix,String uri){
+			return (MessageArgument) createArgument(name, prefix, uri);
+		}
+		
+		
 	}
 }

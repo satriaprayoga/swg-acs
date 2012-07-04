@@ -1,68 +1,42 @@
 package com.swg.acs.datamodel;
 
+import java.util.regex.Pattern;
+
+import javax.xml.soap.SOAPMessage;
+
+import org.apache.log4j.Logger;
 import org.junit.Test;
 
+import com.swg.acs.Message;
+import com.swg.acs.message.GetRPCMethods;
 import com.swg.acs.message.datamodel.DataModel;
+import com.swg.acs.message.datamodel.DataModelUtil;
+import com.swg.acs.message.soap.CwmpMessageBuilder;
+import com.swg.acs.message.soap.SoapMessageBuilder;
 
 public class MockDataModel {
+	
+	
 
-	private MockDataModel root;
-	private Object value;
-	private String label;
+	static Logger logger=Logger.getLogger(MockDataModel.class);
 	
-	public void setRoot(MockDataModel root) {
-		this.root = root;
-	}
+	static String regex="(((.*)?\\.{1})|(\\[.*?\\.{1}]))";
+	static Pattern pattern=Pattern.compile(regex);
 	
-	public boolean isRoot(){
-		return (root==null);
-	}
-	
-	public MockDataModel getRoot() {
-		return root;
-	}
-	
-	public void setLabel(String label) {
-		this.label = label;
-	}
-	
-	public String getLabel() {
-		return label;
-	}
-	
-	public void setValue(Object value) {
-		this.value = value;
-	}
-	
-	public Object getValue() {
-		return value;
-	}
-	
-	public boolean isNumberIdentifier(){
-		return (Number.class.isAssignableFrom(value.getClass()));
-	}
-	
-	public boolean isAliasIdentifier(){
-		return (String.class.isAssignableFrom(value.getClass()));
-	}
-	
-	public Class<?> getType(){
-		return value.getClass();
+	@Test 
+	public void testDeviceDataModel(){
+		String input="InternetGatewayDevice.DeviceInfo.WANSettings";
+		DataModel dataModel=DataModelUtil.parseFromInput(input);
+		logger.info("full: "+dataModel.getFullDesc());
+		logger.info("value: "+dataModel.getValue().toString());
+		logger.info("is partial path: "+dataModel.isPartialPath());
 	}
 	
 	@Test
-	public void testDataModel(){
-		DataModel dataModel=new DataModel();
-		dataModel.append("Device.");
-		dataModel.append("ManagementServer.");
-		System.out.println(dataModel.getFullDesc());
+	public void testRequest()throws Exception{
+		Message message=new GetRPCMethods();
+		SoapMessageBuilder builder=CwmpMessageBuilder.getSoapMessageBuilderInstance();
+		SOAPMessage soapMessage=builder.build(message);
+		soapMessage.writeTo(System.out);
 	}
-	
-	
-	
-	@Test
-	public void testBikinDataModel(){
-		
-	}
-	
 }
